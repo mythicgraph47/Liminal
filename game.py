@@ -1,6 +1,8 @@
 import pygame
 import rooms
 import random
+import main
+import brew
 
 class LiminalGame:
     def __init__(self):
@@ -22,7 +24,7 @@ class LiminalGame:
         self.fragments_collected = 0
 
         #player
-        self.player_rect = pygame.rect(300, 500, 40, 40)
+        self.player_rect = pygame.Rect(300, 500, 40, 40)
         self.player_speed = 4
         self.playerX_change = 0
         self.playerY_change = 0
@@ -46,10 +48,10 @@ class LiminalGame:
                 print('key has been pressed')
 
                 if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    self.plyerX_change -= self.player_speed
+                    self.playerX_change -= self.player_speed
                     print("left movement")
                 if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    self.plyerX_change += self.player_speed
+                    self.playerX_change += self.player_speed
                     print("right movement")
                 if event.key == pygame.K_UP or event.key == pygame.K_w:
                     self.playerY_change -= self.player_speed
@@ -59,14 +61,14 @@ class LiminalGame:
                     print("down movement")
 
             if event.type == pygame.KEYUP:
-                self.plyerX_change = 0
+                self.playerX_change = 0
                 self.playerY_change = 0
 
     def update(self):
         current_room = self.room_list[self.current_room_idx]
 
             #player move
-        self.player_rect.x += self.plyerX_change
+        self.player_rect.x += self.playerX_change
         self.player_rect.y += self.playerY_change
 
 
@@ -84,7 +86,7 @@ class LiminalGame:
         current_room = self.room_list[self.current_room_idx]
 
         #background
-        self.screen.fill(current_room[background_color])
+        self.screen.fill(current_room["background_color"])
 
         #walls
         for wall in current_room["walls"]:
@@ -96,6 +98,12 @@ class LiminalGame:
             (self.fragmentX + 20, self.fragmentY)
         ]
         pygame.draw.rect(self.screen, (150, 20,20), points)
+
+        #player
+        pygame.draw.rect(self.screen, (220, 220, 220), self.player_rect)
+
+        #effects
+        brew.draw_vignette(self.screen, self.player_rect.centerx)
 
 
 

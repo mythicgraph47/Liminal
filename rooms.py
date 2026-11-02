@@ -1,4 +1,7 @@
 import pygame
+import brew
+import main
+import game
 
 def get_rooms():
     rooms = [
