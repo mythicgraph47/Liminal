@@ -1,4 +1,5 @@
 import pygame
+import rooms
 
 class LiminalGame:
     def __init__(self):
@@ -12,6 +13,12 @@ class LiminalGame:
         self.font = pygame.font.SysFont("couriernew", 20, bold=True)
         self.big_Font = pygame.font.SysFont("couriernew", 40, bold=True)
 
+        #game state
+        self.running = True
+        self.room_list = rooms.get_rooms()
+        self.current_room_idx = 0
+        self.fragments_needed = 3
+        self.fragments_collected = 0
     #running
     def run(self):
         self.running = True
