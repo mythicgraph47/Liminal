@@ -24,7 +24,7 @@ class LiminalGame:
         #player
         self.player_rect = pygame.rect(300, 500, 40, 40)
         self.player_speed = 4
-        self.plyerX_change = 0
+        self.playerX_change = 0
         self.playerY_change = 0
 
         #fragements / shards
@@ -114,7 +114,7 @@ class LiminalGame:
 
 
             self.screen.fill((0, 0, 0))
-
+            self.handle_events()
+            self.draw()
             pygame.display.update()
-
             self.clock.tick(60)
