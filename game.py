@@ -1,7 +1,6 @@
 import pygame
 import rooms
 import random
-import main
 import brew
 
 class LiminalGame:
@@ -81,6 +80,17 @@ class LiminalGame:
         if self.fragmentY >= self.height:
             self.spawn_fragments()
 
+        if self.player_rect.collidedict(self.fragment_rect):
+            self.fragments_collected += 1
+            self.spawn_fragments()
+
+                if self.fragments_collected >= self.fragments_needed:
+                self.fragments_collected = 0
+                self.current_room_idx += 1
+
+            if self.current_room_idx >= len(self.room_list):
+                self.current_room_idx = 0
+
 
     def draw(self):
         current_room = self.room_list[self.current_room_idx]
@@ -104,8 +114,27 @@ class LiminalGame:
 
         #effects
         brew.draw_vignette(self.screen, self.player_rect.centerx)
+        brew.buzzing(self.screen, intensity=8)
 
+        #ui
+        ui_text = f"FRAGMENTS: {self.fragments_collected} / {self.fragments_needed}"
 
+        brew.render_glitch_text(self.screen, self.font, ui_text, 20, 20)
+
+        room_text = f"LOCATION: {current_room["name"]}"
+
+        brew.glitching_Text(self.screen, self.font, room_text, 20, 50, (100, 100, 100))
+
+        atmosphere_text = current_room["vibe"]
+        atmosphere_surface = self.font.render(atmosphere_text, true, (50, 50, 50))
+        self.screen.blit(atmosphere_surface, 
+                         (self.width - atmosphere_surface.get_width()
+                                              
+                                              - 20,
+                                                self.height - 40))
+        
+
+        pygame.display.flip()
 
 
 
